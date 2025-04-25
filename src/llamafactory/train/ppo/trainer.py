@@ -106,7 +106,7 @@ class CustomPPOTrainer(PPOTrainer, Trainer):
         # Add deepspeed config
         if training_args.deepspeed_plugin is not None:
             ppo_config.accelerator_kwargs["kwargs_handlers"] = [
-                DistributedDataParallelKwargs(find_unused_parameters=training_args.ddp_find_unused_parameters)
+                DistributedDataParallelKwargs(find_unused_parameters=training_args.ddp_find_unused_parameters, static_graph=training_args.ddp_static_graph)  # type: ignore
             ]
             ppo_config.accelerator_kwargs["deepspeed_plugin"] = training_args.deepspeed_plugin
             if ppo_config.log_with is not None:
